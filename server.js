@@ -1,11 +1,19 @@
+require('dotenv').config()
+
 
 const express = require('express')
+const mongoose = require('mongoose')
+const Log = require('./models/logs')
 const app = express()
 
 app.use(express.urlencoded({ extended: true })) // This code makes us have req.body
 app.set('view engine', 'jsx') // register the jsx view engine
 app.engine('jsx', require('jsx-view-engine').createEngine()) 
 
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connection.once('open', () => {
+  console.log('connected to MongoDB Atlas')
+})
 
 /*Start Routes */
 
@@ -30,9 +38,15 @@ app.get('/logs/new', (req, res) => {
 
 // CREATE
 app.post('/logs', (req, res) => {
-    // req.body.shipIsBroken === 'on' ? req.body.shipIsBroken = true : req.body.shipIsBroken = false
-    res.send(req.body)
-    // res.send('received')
+    req.body.shipIsBroken === 'on' ? req.body.shipIsBroken = true : req.body.shipIsBroken = false
+    Log.create(req.body, (err, createdLog) => {
+        if(err) {
+            console.error(err)
+            res.status(400).send(err)
+        } else {
+            res.redirect('/logs')
+        }
+    })
   })
 
 // EDIT (not applicable in an api)
