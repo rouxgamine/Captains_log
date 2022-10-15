@@ -62,7 +62,17 @@ app.delete('/logs/:id', (req, res) => {
 
 // UPDATE
 
-
+app.put('/logs/:id', (req, res) => {
+    req.body.shipIsBroken === 'on' || req.body.shipIsBroken === true ? req.body.shipIsBroken = true : req.body.shipIsBroken = false
+    Log.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedLog) => {
+      if(err){
+        console.error(err)
+        res.status(400).send(err)
+      } else {
+        res.redirect(`/logs/${updatedLog._id}`)
+      }
+    })
+  })
 
 // CREATE
 app.post('/logs', (req, res) => {
@@ -78,7 +88,18 @@ app.post('/logs', (req, res) => {
   })
 
 // EDIT (not applicable in an api)
-
+app.get('/logs/:id/edit', (req, res) => {
+    Log.findById(req.params.id, (err, foundLog) => {
+        if(err){
+         console.error(err)
+         res.status(400).send(err)
+        } else {
+          res.render('logs/Edit', {
+            log: foundLog
+          })
+        }
+    })
+})
 
 // SHOW ---- READ ---- GET
 app.get('/logs/:id', (req, res) => {

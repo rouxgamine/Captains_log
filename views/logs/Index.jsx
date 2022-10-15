@@ -8,6 +8,7 @@ class Index extends React.Component {
                 <h1> Index Page</h1>
                 <nav>
                     <a href="/logs/new">Create a New Log</a>
+                    
                 </nav>
                 <ul>
                     { 
@@ -26,6 +27,7 @@ class Index extends React.Component {
                                         'the ship is not broken'
                                     }   
                                     <br />
+                                    <a href={`/logs/${_id}/edit`}>Edit a Log</a>
                                     <form method="POST" action={`/logs/${log._id}?_method=DELETE`}>
                                         <input type="submit" value={`Delete ${entry} ${title}`}/>
                                     </form>
