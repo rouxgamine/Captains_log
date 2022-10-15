@@ -1,10 +1,13 @@
+// Require modules
 require('dotenv').config()
-
 const express = require('express')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 const Log = require('./models/logs')
 const app = express()
 
+
+/* Start Config */
 app.use(express.urlencoded({ extended: true })) // This code makes us have req.body
 app.set('view engine', 'jsx') // register the jsx view engine
 app.engine('jsx', require('jsx-view-engine').createEngine()) 
@@ -13,6 +16,14 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 mongoose.connection.once('open', () => {
   console.log('connected to MongoDB Atlas')
 })
+/* End Config */
+
+/* Start Middleware */
+app.use(methodOverride('_method'))
+
+/* End Middleware */
+
+
 
 /*Start Routes */
 
@@ -23,10 +34,10 @@ app.get('/logs', (req, res) => {
         console.error(err)
         res.status(400).send(err)
       } else {
-        res.render('logs/Index', { 
+        res.render('logs', { 
           logs: foundLogs
         })
-      } console.log(foundLogs)
+      } // console.log(foundLogs)
     })
 })
 
@@ -37,6 +48,16 @@ app.get('/logs/new', (req, res) => {
 
 
 // DELETE
+app.delete('/logs/:id', (req, res) => {
+    Log.findByIdAndDelete(req.params.id, (err) => {
+        if(err){
+         console.error(err)
+         res.status(400).send(err)
+        } else {
+          res.redirect('/logs')
+        }
+    })
+})
 
 
 // UPDATE

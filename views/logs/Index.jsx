@@ -12,8 +12,8 @@ class Index extends React.Component {
                 <ul>
                     { 
                         logs.map((log) => {
-                            const { title, entry, shipIsBroken } = log
-                            console.log(log)
+                            const { title, entry, shipIsBroken, _id } = log
+                            // console.log(log)
                             return (
                                 <li key={log._id}> 
                                     <a href={`/logs/${log._id}`}>
@@ -26,7 +26,7 @@ class Index extends React.Component {
                                         'the ship is not broken'
                                     }   
                                     <br />
-                                    <form method="POST" action={`/logs/${log}?_method=DELETE`}>
+                                    <form method="POST" action={`/logs/${log._id}?_method=DELETE`}>
                                         <input type="submit" value={`Delete ${entry} ${title}`}/>
                                     </form>
                                 </li>
