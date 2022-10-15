@@ -60,6 +60,19 @@ app.post('/logs', (req, res) => {
 
 
 // SHOW ---- READ ---- GET
+app.get('/logs/:id', (req, res) => {
+    Log.findById(req.params.id, (err, foundLog) => {
+        if(err){
+         console.error(err)
+         res.status(400).send(err)
+        } else {
+          res.render('logs/Show', {
+            log: foundLog
+          })
+        }
+    })
+})
+
 
 
 /* END ROUTES */

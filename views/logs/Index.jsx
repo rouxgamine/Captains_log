@@ -22,8 +22,8 @@ class Index extends React.Component {
                                     <br /> 
                                     { 
                                         shipIsBroken? 
-                                        'The ship is broken':
-                                        'The ship is not broken'
+                                        'the ship is broken':
+                                        'the ship is not broken'
                                     }   
                                     <br />
                                     <form method="POST" action={`/logs/${log}?_method=DELETE`}>
