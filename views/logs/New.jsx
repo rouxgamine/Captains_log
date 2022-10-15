@@ -6,9 +6,9 @@ class New extends React.Component {
             // <h1> New Page </h1>
             <body>
             <form action="/logs" method="POST">
-                <input type="text" name='name' placeholder='Title'/>
-                <input type="textarea" placeholder='Entry'/>
-                <input type="checkbox" name='shipIsBroken'/>
+                Title: <input type="text" name='title' placeholder='Title'></input><br/>
+                Entry: <input type="textarea" name="entry" placeholder='Entry'></input><br/>
+                Ship Is Broken: <input type="checkbox" name='shipIsBroken'/>
                 <input type="submit" />
             </form>      
             

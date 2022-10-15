@@ -1,6 +1,5 @@
 require('dotenv').config()
 
-
 const express = require('express')
 const mongoose = require('mongoose')
 const Log = require('./models/logs')
@@ -18,10 +17,18 @@ mongoose.connection.once('open', () => {
 /*Start Routes */
 
 // INDEX --- READ --- GET
-// app.get('/logs/', (req, res) => {
-
-// }
-// )
+app.get('/logs', (req, res) => {
+    Log.find({}, (err, foundLogs) => {
+    if(err){
+        console.error(err)
+        res.status(400).send(err)
+      } else {
+        res.render('logs/Index', { 
+          logs: foundLogs
+        })
+      } console.log(foundLogs)
+    })
+})
 
 // NEW (Not applicable in an api)
 app.get('/logs/new', (req, res) => {
@@ -44,7 +51,7 @@ app.post('/logs', (req, res) => {
             console.error(err)
             res.status(400).send(err)
         } else {
-            res.redirect('/logs')
+            res.redirect(`/logs`)
         }
     })
   })
