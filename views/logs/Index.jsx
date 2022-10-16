@@ -18,18 +18,19 @@ class Index extends React.Component {
                             return (
                                 <li key={log._id}> 
                                     <a href={`/logs/${log._id}`}>
-                                    {title}</a> is {entry}
-
+                                    {title}</a>
+                                    <br/>
+                                    {entry}
                                     <br /> 
                                     { 
                                         shipIsBroken? 
-                                        'the ship is broken':
-                                        'the ship is not broken'
+                                        'The ship is broken':
+                                        'The ship is not broken'
                                     }   
                                     <br />
                                     <a href={`/logs/${_id}/edit`}>Edit a Log</a>
                                     <form method="POST" action={`/logs/${log._id}?_method=DELETE`}>
-                                        <input type="submit" value={`Delete ${entry} ${title}`}/>
+                                        <input type="submit" value={`Delete ${title} ${entry} `}/>
                                     </form>
                                 </li>
                             )
